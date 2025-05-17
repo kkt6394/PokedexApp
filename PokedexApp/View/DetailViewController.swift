@@ -8,10 +8,22 @@
 import Foundation
 import UIKit
 import SnapKit
+import RxSwift
+
 
 final class DetailViewController: UIViewController {
-    // 전달 받을 프로퍼티
-    var pokemonDetails: Details?
+    
+    private let viewModel: DetailViewModel
+    private let disposeBag = DisposeBag()
+    
+    init(viewModel: DetailViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     private let imageView = UIImageView()
     private let nameLabel = UILabel()
@@ -23,16 +35,23 @@ final class DetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 190/255, green: 30/255, blue: 40/255, alpha: 1.0)
-        setupUI()
+        view.addSubview(stackView)
         setupConstraints()
+        bindViewModel()
+    }
+    
+    private func bindViewModel() {
+        viewModel.detailRelay
+            .asDriver(onErrorDriveWith: .empty())
+            .drive(onNext: { [weak self] details in
+                self?.setupUI(with: details)
+            })
+            .disposed(by: disposeBag)
     }
     
     
-    
-    private func setupUI() {
-        [stackView].forEach { view.addSubview($0) }
-        guard let details = pokemonDetails,
-              let type = details.types.first?.type.name,
+    private func setupUI(with details: Details) {
+        guard let type = details.types.first?.type.name,
         let translatedType = PokemonTypeName(rawValue: type)?.displayName else { return }
         
         let urlStirng = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\(details.id).png"

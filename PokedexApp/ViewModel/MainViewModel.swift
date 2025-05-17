@@ -16,9 +16,7 @@ final class MainViewModel {
     // View가 구독할 relay(포켓몬 리스트를 담을 relay)
     let relay = PublishRelay<PokemonResponse>()
     
-    // View가 구독할 relay(상세 데이터를 담을 relay)
-    let detailRelay = PublishRelay<Details>()
-    
+       
     // 포켓몬 데이터를 API에서 가져오기
     func fetchPokeData() {
         guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0") else { return }
@@ -30,14 +28,5 @@ final class MainViewModel {
             }.disposed(by: disposeBag)
     }
     
-    // 포켓몬 상세 데이터 가져오고, detailRelay에 이벤트 방출.
-    func fetchDetailData(from urlStirng: String) {
-        
-        guard let url = URL(string: urlStirng) else { return }
-        NetworkManager.shared.fetch(url: url)
-            .asDriver(onErrorDriveWith: .empty())
-            .drive { [weak self] (details: Details) in
-                self?.detailRelay.accept(details)
-            }.disposed(by: disposeBag)
-    }
+    
 }

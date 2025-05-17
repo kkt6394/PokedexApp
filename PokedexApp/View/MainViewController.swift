@@ -70,14 +70,6 @@ final class MainViewController: UIViewController {
                 self?.collectionView.reloadData()
             }).disposed(by: disposeBag)
         
-        viewModel.detailRelay
-            .asDriver(onErrorDriveWith: .empty())
-            .drive(onNext: { [weak self] details in
-                let detailVC = DetailViewController()
-                detailVC.pokemonDetails = details
-                self?.navigationController?.pushViewController(detailVC, animated: true)
-            })
-            .disposed(by: disposeBag)
     }
     
     
@@ -109,8 +101,9 @@ extension MainViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         let pokemon = pokemonList[indexPath.item]
-        // URL로 상세 데이터 가져오기
-        viewModel.fetchDetailData(from: pokemon.url)
+        let detailVM = DetailViewModel(pokemonURL: pokemon.url)
+        let detailVC = DetailViewController(viewModel: detailVM)
+        navigationController?.pushViewController(detailVC, animated: true)
     }
 }
 
