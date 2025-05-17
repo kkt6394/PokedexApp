@@ -13,17 +13,9 @@ import RxSwift
 
 final class DetailViewController: UIViewController {
     
-    private let viewModel: DetailViewModel
+    private let viewModel = DetailViewModel()
     private let disposeBag = DisposeBag()
     
-    init(viewModel: DetailViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     private let imageView = UIImageView()
     private let nameLabel = UILabel()
@@ -47,6 +39,10 @@ final class DetailViewController: UIViewController {
                 self?.setupUI(with: details)
             })
             .disposed(by: disposeBag)
+    }
+    
+    func configure(with url: String) {
+        viewModel.fetchDetailData(from: url)
     }
     
     

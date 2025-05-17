@@ -13,20 +13,15 @@ final class DetailViewModel {
     // 구독 해제를 위한 DisposeBag
     private let disposeBag = DisposeBag()
     
-    private let pokemonURL: String
     
     // View가 구독할 relay(상세 데이터를 담을 relay)
     let detailRelay = PublishRelay<Details>()
     
-    init(pokemonURL: String) {
-        self.pokemonURL = pokemonURL
-        fetchDetailData()
-    }
 
     // 포켓몬 상세 데이터 가져오고, detailRelay에 이벤트 방출.
-    func fetchDetailData() {
+    func fetchDetailData(from urlString: String) {
         
-        guard let url = URL(string: pokemonURL) else { return }
+        guard let url = URL(string: urlString) else { return }
         NetworkManager.shared.fetch(url: url)
             .asDriver(onErrorDriveWith: .empty())
             .drive { [weak self] (details: Details) in
