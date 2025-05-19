@@ -52,15 +52,9 @@ final class DetailViewController: UIViewController {
         
         let urlStirng = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\(details.id).png"
         guard let url = URL(string: urlStirng) else { return }
-        DispatchQueue.global().async { [weak self] in
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.sync {
-                        self?.imageView.image = image
-                    }
-                }
-            }
-        }
+        
+        imageView.kf.setImage(with: url)
+        
         // 레이블 설정
         let koreanName = PokemonTranslator.getKoreanName(for: details.name)
         nameLabel.text = "No.\(details.id) \(koreanName)"
