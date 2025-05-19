@@ -66,7 +66,7 @@ final class MainViewController: UIViewController {
         viewModel.relay
             .asDriver(onErrorDriveWith: .empty())
             .drive(onNext: { [weak self] response in
-                self?.pokemonList = response.results
+                self?.pokemonList += response.results
                 self?.collectionView.reloadData()
             }).disposed(by: disposeBag)
         
@@ -104,6 +104,12 @@ extension MainViewController: UICollectionViewDelegate {
         let detailVC = DetailViewController()
         detailVC.configure(with: pokemon.url)
         navigationController?.pushViewController(detailVC, animated: true)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.item == pokemonList.count - 1 {
+            viewModel.fetchPokeData()
+        }
     }
 }
 

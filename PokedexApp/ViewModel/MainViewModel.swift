@@ -13,18 +13,26 @@ final class MainViewModel {
     // 구독 해제를 위한 DisposeBag
     private let disposeBag = DisposeBag()
     
+    private var offset = 0
+    private let limit = 20
+    private var isLoading = false
+    
     // View가 구독할 relay(포켓몬 리스트를 담을 relay)
     let relay = PublishRelay<PokemonResponse>()
     
        
     // 포켓몬 데이터를 API에서 가져오기
     func fetchPokeData() {
-        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0") else { return }
+        guard !isLoading else { return }
+        isLoading = true
+        guard let url = URL(string: "https://pokeapi.co/api/v2/pokemon?limit=\(limit)&offset=\(offset)") else { return }
         
         NetworkManager.shared.fetch(url: url)
             .asDriver(onErrorDriveWith: .empty())
             .drive { [weak self] (response: PokemonResponse) in
                 self?.relay.accept(response)
+                self?.offset += self?.limit ?? 20
+                self?.isLoading = false
             }.disposed(by: disposeBag)
     }
     
