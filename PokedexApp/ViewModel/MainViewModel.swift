@@ -30,8 +30,8 @@ final class MainViewModel {
         NetworkManager.shared.fetch(url: url)
             .asDriver(onErrorDriveWith: .empty())
             .drive { [weak self] (response: PokemonResponse) in
-                self?.relay.accept(response)
                 self?.offset += self?.limit ?? 20
+                self?.relay.accept(response)
                 self?.isLoading = false
             }.disposed(by: disposeBag)
     }
