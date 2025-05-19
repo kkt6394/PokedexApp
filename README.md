@@ -62,17 +62,7 @@ Swift 기반으로 제작된 포켓몬 도감 애플리케이션입니다.
 
 + ViewModel : NetworkManager 메서드를 활용하여 생성한 Observable에 이벤트를 방출하는 비즈니스 로직 담당
 
-  
-
-
-# 실행 방법
-
-
-1. Xcode에서 프로젝트를 열고 실행 (Cmd + R)
-2. 화면의 버튼을 눌러 계산 기능을 테스트
-3. 잘못된 입력이 있을 경우 경고 메시지가 나타나는지 확인
-
-
+ 
 
 # 향후 개선 사항
 
@@ -88,3 +78,7 @@ Swift 기반으로 제작된 포켓몬 도감 애플리케이션입니다.
 + 이름: 김기태
 
 + 개발일: 2025-05-19
+  
++ GitHub : https://github.com/kkt6394
+
++ Blog : https://ioskkt.tistory.com/
