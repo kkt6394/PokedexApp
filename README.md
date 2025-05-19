@@ -1,4 +1,4 @@
-[![Typing SVG](https://readme-typing-svg.demolab.com?font=Bungee+Tint&size=35&pause=1000&color=F73B98&width=435&lines=Pokedex)](https://git.io/typing-svg)
+[![Typing SVG](https://readme-typing-svg.demolab.com?font=Bungee+Tint&size=35&pause=1000&color=F73B98&width=435&lines=Poke+dex)](https://git.io/typing-svg)
 
 # 프로젝트 소개
 Swift 기반으로 제작된 포켓몬 도감 애플리케이션입니다.
