@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 import RxSwift
+import Kingfisher
 
 
 final class DetailViewController: UIViewController {
